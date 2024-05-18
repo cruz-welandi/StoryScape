@@ -66,7 +66,7 @@ const SignIn = () => {
 
     
   return (
-    <div className='flex w-1/3 p-6 bg-black/10 shadow rounded mt-8'>
+    <div className='xl:flex xl:w-1/3 p-6 bg-black/10 shadow rounded-xl mt-8 w-[320px]'>
         <div className='flex flex-col gap-y-5 w-full'>
             <div className='p-3 text-center w-[70px] text-blue-800 text-2xl font-bold rounded-md bg-blue-800/25'>
                 241
@@ -91,7 +91,7 @@ const SignIn = () => {
                         Mot de passe oublié
                     </Link>
                 </div>
-                <button onClick={handleSingIn} type='submit' className='self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full rounded'>
+                <button onClick={handleSingIn} type='submit' className='self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full rounded-md'>
                     {loading ? (
                         <div className='flex justify-center items-center'>
                         <ThreeDots
@@ -111,7 +111,11 @@ const SignIn = () => {
                         </span> 
                     )}
                 </button>
+                <p className='xl:hidden lg:hidden text-lg'>
+                    vous n'avez pas de compte?<Link className='text-blue-500' href={'/auth/sign_up'}>Inscrivez-vous</Link>
+                </p>
             </form>
+            
         </div>
 
         <Modal type={typeModal} isOpen={modalOpen} onClose={()=> setModalOpen(false) }>
@@ -136,7 +140,7 @@ const SignIn = () => {
             )}
             
             <div className='flex justify-center items-center'>
-                <button onClick={handleCloseModal} className='text-xl font-bold items-center mt-4 bg-blue-500 w-1/2 text-white py-3 px-7 rounded'>
+                <button onClick={handleCloseModal} className='text-xl font-bold items-center mt-4 bg-blue-500 xl:w-1/2 w-full text-white py-3 px-7 rounded'>
                     {typeModal === "success" ? "Connectez-vous" : "Réessayer"}
                 </button>
             </div>

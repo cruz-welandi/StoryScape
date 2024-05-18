@@ -10,7 +10,7 @@ export const Modal = ({isOpen, type, children, successColor = "#4CAF50", failure
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-dlur-sm flex flex-col justify-center items-center">
-        <div className="flex flex-col gap-y-4 bg-white w-1/3 py-8 rounded-md">
+        <div className="flex flex-col gap-y-4 bg-white xl:w-1/3 xl:py-8 py-5  rounded-xl xl:px-0 px-2">
             <div className="flex justify-center items-center">
                 <Icon color={color} size="100"/>
             </div>

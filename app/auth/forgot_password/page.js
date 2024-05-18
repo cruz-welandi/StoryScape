@@ -52,16 +52,16 @@ const ForgotPassword = () => {
     }
 
   return (
-    <div className='flex p-6 bg-black/10 shadow rounded mt-28'>
-        <div className='flex flex-col gap-y-5'>
+    <div className='flex p-6 bg-black/10 shadow rounded-xl xl:mt-28 mt-10 w-[300px] xl:w-full'>
+        <div className='flex flex-col gap-y-5 w-full'>
             <div className='p-3 text-center w-[70px] text-blue-800 text-2xl font-bold rounded-md bg-blue-800/25'>
                 241
             </div>
-            <h1 className='text-3xl font-bold'>
+            <h1 className='xl:text-3xl font-bold text-2xl'>
                 Mot de passe oublié
             </h1>
             <p className='text-lg'>
-                Saisissez votre email pour récupérer votre mot de passe,<br/> vous allez recevoir une email confirmer la la demande de réinitialisation
+                Saisissez votre email pour récupérer votre mot de passe,<br className='hidden xl:block'/> vous allez recevoir une email confirmer la la demande de réinitialisation
             </p>
             <form className='flex flex-col gap-y-4'>
                 
@@ -71,7 +71,7 @@ const ForgotPassword = () => {
                     </label>
                     <input type='email' value={email} onChange={(e) => setEmail(e.target.value)} placeholder='cruz@gmail.com' className='placeholder:text-xl placeholder:text-black text-xl outline-none bg-gray-500/20 h-[60px] rounded-md p-3' required/>
                 </div>
-                <button onClick={handleForgotPassword} type='submit' className='self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full rounded'>
+                <button onClick={handleForgotPassword} type='submit' className='self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full  rounded-lg'>
                     {loading ? (
                         <div className='flex justify-center items-center'>
                         <ThreeDots
@@ -116,7 +116,7 @@ const ForgotPassword = () => {
             )}
             
             <div className='flex justify-center items-center'>
-                <button onClick={handleCloseModal} className='text-xl font-bold items-center mt-4 bg-blue-500 w-1/2 text-white py-3 px-7 rounded'>
+                <button onClick={handleCloseModal} className='text-xl font-bold items-center mt-4 bg-blue-500 xl:w-1/2 w-full text-white py-3 px-7 rounded'>
                     {typeModal === "success" ? "Connectez-vous" : "Réessayer"}
                 </button>
             </div>
