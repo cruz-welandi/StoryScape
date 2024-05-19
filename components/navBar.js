@@ -124,7 +124,7 @@ const NavBar = () => {
                                 <FaArchive className='text-2xl'/>
                                 Archives
                             </Link>
-                            <Link href={'/'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
+                            <Link href={'/articles/create'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
                                 <FaSquarePlus className='text-2xl'/>
                                 Poster
                             </Link>
