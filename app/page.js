@@ -32,13 +32,13 @@ export default function Home() {
   return (
     <div className="px-5">
       <h1 className="text-center text-2xl font-bold mt-5">
-        Tops storys
+        Tops News
       </h1>
       
       <div className="mt-5 flex flex-col gap-y-3">
         
         {topArticles.length >0 && (
-          <Link href={'/'} className="flex flex-col gap-y-4">
+          <Link href={`/articles/${topArticles[0].id}`} className="flex flex-col gap-y-4">
             <Image
               src={topArticles[0].image}
               width={300}
@@ -54,7 +54,7 @@ export default function Home() {
         )}
         <div className="flex flex-col gap-y-3">
           {topArticles.length >1 && (
-            <Link href={'/'} className="">
+            <Link href={`/articles/${topArticles[1].id}`} className="">
               <Image
                 src={topArticles[1].image}
                 width={400}
@@ -70,7 +70,7 @@ export default function Home() {
           )}
 
           {topArticles.length >2 && (
-          <Link href={'/'} className="">
+          <Link href={`/articles/${topArticles[2].id}`} className="">
             <Image
               src={topArticles[2].image}
               width={300}

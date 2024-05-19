@@ -21,7 +21,7 @@ const NavBar = () => {
                         lg:flex lg:justify-between lg:px-10 lg:items-center lg:py-1
                         md:flex md:justify-between md:px-8 md:items-center md:py-1
                         sm:flex sm:justify-between sm:px-5 sm:items-center sm:py-1
-                        flex justify-between px-5 items-center py-1 bg-white'>
+                        flex justify-between px-5 items-center py-1 bg-white border-b-2 border-black relative'>
             <div>
                 <Link href='/'>
                     <Image
@@ -36,25 +36,25 @@ const NavBar = () => {
                 <div className='hidden xl:block lg:block'>
                     <ol className='xl:flex xl:gap-x-4 xl:items-center'>
                         <Link href={'/'} className='text-black text-xl'>
-                            <il>Catégories</il>
+                            Catégories
                         </Link>
                         <Link href={'/'} className='text-black text-xl'>
-                            <il>Archives</il>
+                            Archives
                         </Link>
                         {!user ? (
                             <div className='flex gap-x-4 items-center'>
                                 <Link href={'/auth/sign_in'} className='text-black text-xl rounded-md border border-black p-2'>
-                                    <il>Connexion</il>
+                                    Connexion
                                 </Link>
                                 <Link href={'/auth/sign_up'} className='text-black text-xl rounded-md border border-black p-2'>
-                                    <il>Inscription</il>
+                                    Inscription
                                 </Link>
                             </div>
                         ) : (
                             <div className='flex gap-x-2'>
                                 {user.email}
                                 <Link href={'/'} className='text-black text-xl'>
-                                    <il>Poster</il>
+                                    Poster
                                 </Link>
                             </div>
                         )}
@@ -65,7 +65,7 @@ const NavBar = () => {
                 {/*partie mobile*/}
                 <div className='xl:hidden lg:hidden flex items-center gap-x-4'>
                     <Link href={'/auth/sign_in'} className='text-black text-xl rounded-md border border-black p-1'>
-                        <il>Connexion</il>
+                        Connexion
                     </Link>
 
                     <button className='xl:hidden lg:hidden md:hidden p-1 border border-black rounded-md' onClick={handleMenu}>
@@ -80,13 +80,13 @@ const NavBar = () => {
             </div>
         </nav>
         { isClic && (
-            <div className='flex justify-between fixed inset-0 bg-white duration-500 mt-16'>
+            <div className='flex justify-between absolute px-4 inset-0 bg-white duration-500 mt-[80px] h-[250px]'>
                 <div className='flex flex-col'>
                     <Link href={'/'} className='text-black text-xl'>
-                        <il>Catégories</il>
+                        Catégories
                     </Link>
                     <Link href={'/'} className='text-black text-xl'>
-                        <il>Archives</il>
+                        Archives
                     </Link>
                 </div>
             </div>
