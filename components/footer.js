@@ -8,8 +8,8 @@ import { FaFacebook } from "react-icons/fa6";
 
 const Footer = () => {
   return (
-    <div className='flex flex-col gap-y-2 px-4 py-3 bg-white mt-6'>   
-        <div className='flex justify-between'>
+    <div className='flex flex-col gap-y-2 py-3 bg-white mt-6'>   
+        <div className='flex justify-between px-2'>
             <div>
                 <Link href='/'>
                     <Image
@@ -43,7 +43,7 @@ const Footer = () => {
                 
             </div>
         </div>
-        <div className='flex flex-col gap-y-4'>
+        <div className='flex flex-col gap-y-4 px-4'>
             <hr className='bg-black'/>
             <p className='text-center text-lg'>
                 © Copyright 2024 StoryScape. All rights reserved.
