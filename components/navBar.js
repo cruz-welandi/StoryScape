@@ -21,7 +21,7 @@ const NavBar = () => {
                         lg:flex lg:justify-between lg:px-10 lg:items-center lg:py-1
                         md:flex md:justify-between md:px-8 md:items-center md:py-1
                         sm:flex sm:justify-between sm:px-5 sm:items-center sm:py-1
-                        flex justify-between px-5 items-center py-1'>
+                        flex justify-between px-5 items-center py-1 bg-white'>
             <div>
                 <Link href='/'>
                     <Image
