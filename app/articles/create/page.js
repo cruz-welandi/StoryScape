@@ -85,7 +85,7 @@ const CreatePoste = () => {
                                 <label className='font-bold text-lg'>
                                     Catégorie
                                 </label>
-                                <select className="w-[150px] h-[40px] bg-gray-500/20 rounded-md">
+                                <select className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
                                     <option className="w-[150px]">
                                         sélectioner une Catégorie
                                     </option>
@@ -99,7 +99,7 @@ const CreatePoste = () => {
                                 <label className='font-bold text-lg'>
                                     Tags
                                 </label>
-                                <select className="w-[150px] h-[40px] bg-gray-500/20 rounded-md">
+                                <select className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
                                     <option className="w-[150px]">
                                         sélectioner un tag
                                     </option>
