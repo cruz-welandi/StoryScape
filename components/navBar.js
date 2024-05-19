@@ -6,10 +6,13 @@ import logo from '@/public/assets/images/logo.png';
 import { useAuth } from '@/services/context/authContext';
 import { TfiMenu} from "react-icons/tfi";  
 import { FiX } from "react-icons/fi";
+import { FaArchive, FaSignOutAlt } from "react-icons/fa";
+import { BiSolidCategory } from "react-icons/bi";
+import { FaSquarePlus } from "react-icons/fa6";
 
 const NavBar = () => {
     const[isClic, setIsClic] = useState(false);
-    const {user} = useAuth();
+    const {user,SignOut } = useAuth();
 
     const handleMenu =()=>{
         setIsClic(!isClic);
@@ -63,31 +66,74 @@ const NavBar = () => {
                 </div>
 
                 {/*partie mobile*/}
-                <div className='xl:hidden lg:hidden flex items-center gap-x-4'>
-                    <Link href={'/auth/sign_in'} className='text-black text-xl rounded-md border border-black p-1'>
-                        Connexion
-                    </Link>
+                {!user ?(
+                    <div className='xl:hidden lg:hidden flex items-center gap-x-4'>
+                        <Link href={'/auth/sign_in'} className='text-black text-xl rounded-md border border-black p-1'>
+                            Connexion
+                        </Link>
 
-                    <button className='xl:hidden lg:hidden md:hidden p-1 border border-black rounded-md' onClick={handleMenu}>
-                        {isClic ?(
-                            <FiX className='text-3xl'/>
-                        ):(
-                            <TfiMenu className='text-3xl'/>
-                        )}
-                        
-                    </button>
-                </div>
+                        <button className='xl:hidden lg:hidden md:hidden p-1 border border-black rounded-md' onClick={handleMenu}>
+                            {isClic ?(
+                                <FiX className='text-3xl'/>
+                            ):(
+                                <TfiMenu className='text-3xl'/>
+                            )}
+                            
+                        </button>
+                    </div>
+                ):(
+                    <div className='xl:hidden lg:hidden flex items-center gap-x-4'>
+                        <Link href={'/articles/create'} className='text-black text-xl items-center flex gap-x-2 rounded-md border border-black p-1'>
+                            <FaSquarePlus className='text-2xl'/>
+                            Poster
+                        </Link>
+
+                        <button className='xl:hidden lg:hidden md:hidden p-1 border border-black rounded-md' onClick={handleMenu}>
+                            {isClic ?(
+                                <FiX className='text-3xl'/>
+                            ):(
+                                <TfiMenu className='text-3xl'/>
+                            )}
+                            
+                        </button>
+                    </div>
+                )}
             </div>
         </nav>
         { isClic && (
             <div className='flex justify-between absolute px-4 inset-0 bg-white duration-500 mt-[80px] h-[250px]'>
                 <div className='flex flex-col'>
-                    <Link href={'/'} className='text-black text-xl'>
-                        Catégories
-                    </Link>
-                    <Link href={'/'} className='text-black text-xl'>
-                        Archives
-                    </Link>
+                    {!user ? (
+                        <div className='flex flex-col gap-y-2 py-2'>
+                           <Link href={'/'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
+                                <BiSolidCategory className='text-2xl'/>
+                                Catégories
+                            </Link>
+                            <Link href={'/'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
+                                <FaArchive className='text-2xl'/>
+                                Archives
+                            </Link> 
+                        </div>
+                    ): (
+                        <div className='flex flex-col gap-y-2 py-2'>
+                           <Link href={'/'} className='text-black text-xl flex  gap-x-4 hover:border-b hover:border-black'>
+                                <BiSolidCategory className='text-2xl '/>
+                                Catégories
+                            </Link>
+                            <Link href={'/'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
+                                <FaArchive className='text-2xl'/>
+                                Archives
+                            </Link>
+                            <Link href={'/'} className='text-black text-xl flex gap-x-4 hover:border-b hover:border-black'>
+                                <FaSquarePlus className='text-2xl'/>
+                                Poster
+                            </Link>
+                            <button onClick={SignOut} className='flex gap-x-4 hover:border-b hover:border-black'>
+                                <FaSignOutAlt className='text-2xl'/>
+                                Déconnexion
+                            </button>
+                        </div>
+                    )}
                 </div>
             </div>
         )}
