@@ -48,7 +48,7 @@ export default function Home() {
                 height={120}
                 alt='CDL'
               />
-              <div className="text-xl flex flex-col gap-y-1">
+              <div className="text-xl flex flex-col gap-y-1 mt-2">
                 <h1>{article.titre}</h1>
                 <h2>{article.tags}</h2>
                 <h2 className="font-bold">Par {article.auteur}</h2>
@@ -72,17 +72,11 @@ export default function Home() {
             <Link href={`/articles/${article.id}`} className="">
               <Image
                 src={article.image}
-                width={200}
+                width={150}
                 height={150}
                 alt='CDL'
-                className="h-[150px]"
+                className="h-[150px] relative"
               />
-              {/*<div className="text-xl flex flex-col gap-y-1">
-                <h1>{article.titre}</h1>
-                <h2>{article.tags}</h2>
-                <h2 className="font-bold">Par {article.auteur}</h2>
-              </div> */}
-              
             </Link>
           </div>
         ))}
