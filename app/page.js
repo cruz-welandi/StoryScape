@@ -34,10 +34,10 @@ export default function Home() {
   console.log(currentArticles);
   return (
     <div className="px-5">
-      <h1 className="text-center text-2xl font-bold mt-5">
+      <h1 className="text-2xl font-bold mt-5">
         Tops News
       </h1>
-      
+      <hr className='w-[80px] bg-black h-1'/>
       <div className="mt-5 flex flex-col gap-y-3">
         {topArticles.map((article) => (
           <div key={article.id}>
