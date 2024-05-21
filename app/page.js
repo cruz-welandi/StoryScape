@@ -2,9 +2,9 @@
 import React, {useEffect, useState} from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { ref, getDownloadURL } from "firebase/storage";
-import { storage, db} from "@/services/firebase/config";
+import {db} from "@/services/firebase/config";
 import { collection, getDocs } from 'firebase/firestore';
+import {TodayDateTime} from '@/services/utils';
 
 export default function Home() {
   const [articles, setArticles] = useState([]);
@@ -28,7 +28,10 @@ export default function Home() {
     fetchArticles();
   }, []);
 
-  const topArticles = articles.slice(0, 3);
+  console.log(articles);
+  const topArticles = articles.slice(0, 3)
+  const currentArticles = articles.slice(3);
+  console.log(currentArticles);
   return (
     <div className="px-5">
       <h1 className="text-center text-2xl font-bold mt-5">
@@ -36,55 +39,53 @@ export default function Home() {
       </h1>
       
       <div className="mt-5 flex flex-col gap-y-3">
-        
-        {topArticles.length >0 && (
-          <Link href={`/articles/${topArticles[0].id}`} className="flex flex-col gap-y-4">
-            <Image
-              src={topArticles[0].image}
-              width={300}
-              height={120}
-              alt='Andza'
-            />
-            <p className="text-xl flex flex-col gap-y-1">
-               <h1>{topArticles[0].titre}</h1>
-               <h2>#{topArticles[0].tags}</h2>
-               <h2 className="font-bold">Par {topArticles[0].auteur}</h2>
-            </p>
-          </Link>
-        )}
-        <div className="flex flex-col gap-y-3">
-          {topArticles.length >1 && (
-            <Link href={`/articles/${topArticles[1].id}`} className="">
+        {topArticles.map((article) => (
+          <div key={article.id}>
+            <Link href={`/articles/${article.id}`} className="">
               <Image
-                src={topArticles[1].image}
-                width={400}
+                src={article.image}
+                width={300}
                 height={120}
-                alt='Bamboo'
+                alt='CDL'
               />
-              <p className="text-xl flex flex-col gap-y-1">
-                <h1>{topArticles[1].titre}</h1>
-                <h2>#{topArticles[1].tags}</h2>
-                <h2 className="font-bold">Par {topArticles[1].auteur}</h2>
-              </p>
+              <div className="text-xl flex flex-col gap-y-1">
+                <h1>{article.titre}</h1>
+                <h2>{article.tags}</h2>
+                <h2 className="font-bold">Par {article.auteur}</h2>
+              </div>
             </Link>
-          )}
-
-          {topArticles.length >2 && (
-          <Link href={`/articles/${topArticles[2].id}`} className="">
-            <Image
-              src={topArticles[2].image}
-              width={300}
-              height={120}
-              alt='CDL'
-            />
-            <p className="text-xl flex flex-col gap-y-1">
-              <h1>{topArticles[2].titre}</h1>
-              <h2>#{topArticles[2].tags}</h2>
-              <h2 className="font-bold">Par {topArticles[2].auteur}</h2>
-            </p>
-          </Link>
-        )}
+          </div>
+        ))}
+      </div>
+      {currentArticles.length != 0 && (
+        <div>
+          <h1 className="text-2xl font-bold mt-5">
+            Nouvelles Publications
+          </h1>
+          <hr className='w-[80px] bg-black h-1 mb-5'/>
         </div>
+      )}
+      
+      <div className="overflow-x-auto snap-x snap-mandatory whitespace-nowrap min-w-full flex gap-x-4" >
+        {currentArticles.map((article)=> ( 
+          <div key={article.id} className="snap-center flex-shrink-0">
+            <Link href={`/articles/${article.id}`} className="">
+              <Image
+                src={article.image}
+                width={200}
+                height={150}
+                alt='CDL'
+                className="h-[150px]"
+              />
+              {/*<div className="text-xl flex flex-col gap-y-1">
+                <h1>{article.titre}</h1>
+                <h2>{article.tags}</h2>
+                <h2 className="font-bold">Par {article.auteur}</h2>
+              </div> */}
+              
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );

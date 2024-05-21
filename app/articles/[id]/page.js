@@ -4,13 +4,14 @@ import { doc, getDoc } from "firebase/firestore";
 import { db} from "@/services/firebase/config";
 import { ThreeDots } from 'react-loader-spinner';
 import Image from 'next/image';
-import isEmpty from '@/services/utils'
+import {isEmpty} from '@/services/utils'
 
 function Article ({params}) {
 
     const [article, setArticle] = useState({});
     const id = params?.id || "";
 
+    useEffect(()=> {
       const fetchArticle = async () =>{
         try {
           const docRef = doc(db, "articles", id);
@@ -18,7 +19,6 @@ function Article ({params}) {
 
           if (docSnap.exists()) {
             setArticle(docSnap.data())
-            console.log("Document data:", docSnap.data());
           } else {
             console.log("No such document!");
           }
@@ -26,10 +26,9 @@ function Article ({params}) {
           console.log('error :', error);
         }
       }
-
-      if (id) {
-        fetchArticle();
-      }
+      fetchArticle();
+    },[id])
+      
       
   return (
     <div className='px-4'>
