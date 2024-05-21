@@ -34,7 +34,7 @@ export default function Home() {
   console.log(currentArticles);
   return (
     <div className="px-5">
-      <h1 className="text-2xl font-bold mt-5">
+      <h1 className="text-2xl font-bold mt-5 mb-2">
         Tops News
       </h1>
       <hr className='w-[80px] bg-black h-1'/>
@@ -59,7 +59,7 @@ export default function Home() {
       </div>
       {currentArticles.length != 0 && (
         <div>
-          <h1 className="text-2xl font-bold mt-5">
+          <h1 className="text-2xl font-bold mt-5 mb-2">
             Nouvelles Publications
           </h1>
           <hr className='w-[80px] bg-black h-1 mb-5'/>
