@@ -3,14 +3,15 @@ import { IoAttachSharp } from "react-icons/io5";
 import React, {useState, useEffect} from 'react';
 import { useAuth } from "@/services/context/authContext";
 import {TodayDateTime} from "@/services/utils";
-import { ref, getDownloadURL } from "firebase/storage";
+import {uploadBytesResumable, ref, getDownloadURL, deleteObject} from "firebase/storage";
 import { storage, db} from "@/services/firebase/config";
-import { collection, getDocs, getDoc, doc } from 'firebase/firestore';
+import { collection, addDoc, doc,  getDoc  } from 'firebase/firestore';
 import { ThreeDots } from 'react-loader-spinner';
 import { Modal } from '@/components/modals/authModal';
 import { ImSad2, ImSmile2  } from "react-icons/im";
 import { useRouter } from 'next/navigation';
 import Link from "next/link";
+import {LocalStorage} from '@/services/utils'
 
 const CreatePoste = () => {
 
@@ -20,14 +21,19 @@ const CreatePoste = () => {
     const[tags, setTags] = useState("");
     const[catégorie, setCatégorie] = useState("");
     const[allCatégorie, setAllCatégorie] = useState([]);
-    const[image, setImage] = useState("");
+    const[allTags, setAllTags] = useState([]);
+    const[image, setImage] = useState(null);
     const[contenu, setContenu] = useState("");
     const[titre, setTitre] = useState("");
+    /*const[oldImageName, setOldImageName]= useState("");
+    const[stockImage, setStockImage] = useState(image !==null && image)*/
+    const[loadingImage, setLoadingImage] = useState(false);
+    const[imageUrl, setImageUrl] = useState("");
     const [modalContext, setModalContext] = useState("");
     const [loading, setLoading] = useState(false);
     const [modalOpen, setModalOpen] = useState(false);
     const [typeModal, setTypeModal] = useState("success");
-
+    
     if(user) {
         const auteur = user.firstname+' '+user.lastname;
 
@@ -44,10 +50,88 @@ const CreatePoste = () => {
             }
             AllCategory();
         },[])
+        console.log('categorie :', catégorie)
 
-        console.log('categorie :', allCatégorie)
-        const handlePoste = () => {
+        useEffect(() => {
+            if(catégorie) {
+                const AllTag = async () => {
+                    const docRef = doc(db, "tags", "G451MXAunPO5OwkJ3WQt");
+                    const docSnap = await getDoc(docRef);
 
+                    if (docSnap.exists()) {
+                        const data = docSnap.data();
+                        console.log('data: ', data[catégorie])
+                        setAllTags(data[catégorie]);
+                    } else {
+                        console.log("No such document!");
+                    }
+                }   
+                AllTag();
+            }
+        },[catégorie]);
+        
+        /*useEffect(() =>{
+            if (oldImageName !== "" && oldImageName === stockImage.name) {
+                const deleteImage = () =>{
+                    const oldImageRef = ref(storage, `articles/${oldImageName}`);
+                    deleteObject(oldImageRef).then(() => {
+                        console.log('Ancien fichier supprimé avec succès');
+                        setStockImage(image);
+                    }).catch((error) => {
+                        console.log('Erreur lors de la suppression de l\'ancien fichier', error);
+                    });
+                }
+                deleteImage()
+            }
+        },[oldImageName])*/
+
+        useEffect(() =>{
+            if(image !== null) {
+                const uploadImage =() =>{
+                    setLoadingImage(true);
+                    const storageRef = ref(storage, `articles/${image.name}`);
+                    uploadBytesResumable(storageRef, image)
+                    .then(() =>{
+                        console.log('upload success');
+                        getDownloadURL(ref(storage, `articles/${image.name}`))
+                        .then((url) => {
+                            setImageUrl(url);
+                            setLoadingImage(false);
+                        })
+                    });
+                    //setOldImageName(image.name)
+                    
+                }
+                uploadImage()
+            }
+        },[image])
+        
+        console.log(image)
+
+        const handlePoste = async(e) => {
+            setLoading(true);
+                e.preventDefault();
+                try {
+                    await addDoc(collection(db, "articles"), {
+                    image: imageUrl,
+                    titre,
+                    contenu,
+                    catégorie,
+                    tags,
+                    date_posté,
+                    auteur
+                    });
+                    setModalContext("Votre Article a été créé avec success");
+                    setLoading(false)
+                    setTypeModal("success");
+                    setModalOpen(true);
+                }catch(erro){
+                    console.log('eeror :', erro);
+                    setModalContext("Quelques chose a mal tournée!")
+                    setLoading(false)
+                    setTypeModal("failure");
+                    setModalOpen(true);
+                }
         }
     
         const handleCloseModal = () => {
@@ -100,13 +184,13 @@ const CreatePoste = () => {
                                         <label className='font-bold text-lg'>
                                             Catégorie
                                         </label>
-                                        <select className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
+                                        <select onChange={(e) => setCatégorie(e.target.value)} className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
                                             <option className="w-[150px]">
                                                 sélectioner une Catégorie
                                             </option>
                                             {allCatégorie.length !=0 && allCatégorie.map((categorie, index) => (
                                                 <option key={index} value={categorie}>
-                                                {categorie}
+                                                    {categorie}
                                                 </option>
                                             ))}
                                         </select>
@@ -116,13 +200,15 @@ const CreatePoste = () => {
                                         <label className='font-bold text-lg'>
                                             Tags
                                         </label>
-                                        <select className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
+                                        <select onChange={(e) => setTags(e.target.value)} className="w-[130px] h-[40px] bg-gray-500/20 rounded-md">
                                             <option className="w-[150px]">
                                                 sélectioner un tag
                                             </option>
-                                            <option className="w-[150px]">
-                                                
-                                            </option>
+                                            {allTags.length !=0 && allTags.map((tag, index) => (
+                                                <option key={index} value={tag}>
+                                                    {tag}
+                                                </option>
+                                            ))}
                                         </select>
                                     </div>
                                 </div>
@@ -130,9 +216,9 @@ const CreatePoste = () => {
                                     <label className='font-bold text-lg'>
                                         Image
                                     </label>
-                                    <input type='file' value={image} onChange={(e) => setImage(e.target.value)}  className='text-xl outline-none bg-gray-500/20 h-[60px] rounded-md p-3' required/>
+                                    <input type='file' onChange={(e) => setImage(e.target.files[0])}  className='text-xl outline-none bg-gray-500/20 h-[60px] rounded-md p-3' required/>
                                 </div>
-                                <button onClick={handlePoste} type='submit' className='self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full rounded-md'>
+                                <button onClick={handlePoste} type='submit' className={`self-center text-xl font-bold items-center mt-4 bg-blue-500 text-white py-2 w-full rounded-md ${loadingImage ? 'bg-gray-500' : 'bg-[#279EFF]'}`} disabled={loadingImage}>
                                     {loading ? (
                                         <div className='flex justify-center items-center'>
                                         <ThreeDots

@@ -4,6 +4,7 @@ import { doc, getDoc } from "firebase/firestore";
 import { db} from "@/services/firebase/config";
 import { ThreeDots } from 'react-loader-spinner';
 import Image from 'next/image';
+import isEmpty from '@/services/utils'
 
 function Article ({params}) {
 
@@ -29,10 +30,7 @@ function Article ({params}) {
       if (id) {
         fetchArticle();
       }
-    const isEmpty = (obj) => {
-      return obj && typeof obj === 'object' && Object.keys(obj).length === 0;
-    };
-
+      
   return (
     <div className='px-4'>
       {isEmpty(article) ? (
